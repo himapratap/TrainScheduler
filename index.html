@@ -108,7 +108,8 @@
                 name: "",
                 destination: "",
                 firstTrain: "",
-                frequency: 0
+                frequency: 0,
+                key: ""
             }
 
             $("#add-train").click(function(event) {
@@ -127,6 +128,7 @@
             // show train details on current schedule
             database.ref().on("child_added", function(childSnapshot) {
                 console.log("Retrieving from db");
+                console.log(childSnapshot);
                 console.log(childSnapshot.val());
                 // add a row with train details
                 train = childSnapshot.val();
@@ -167,15 +169,38 @@
                 row.append("<td class='minutesAway'>" + minutesAway + "</td>");
                 var updateBtn = $("<div class='btn btn-primary update'>");
                 updateBtn.text("Update");
-                var removeBtn = $("<div class='btn btn-primary update'>");
+                var removeBtn = $("<div class='btn btn-primary remove'>");
                 removeBtn.text("Remove");
                 row.append(updateBtn);
                 row.append(removeBtn);
+                row.addClass(train.key);
                 // console.log(moment().diff(firstTrain,"H"));
                 $("tbody").append(row);
             }
 
+            $(document).on("click", ".update", function() {
+                console.log("Updating train..");
 
+            });
+
+            $(document).on("click", ".remove", function() {
+                console.log("Removing train ..");
+                database
+                // var adaRef = database().ref('users/ada');
+                // adaRef.remove()
+                //   .then(function() {
+                //     console.log("Remove succeeded.")
+                //   })
+                //   .catch(function(error) {
+                //     console.log("Remove failed: " + error.message)
+                //   });
+                // $(this).closest('tr').remove();
+
+            });
+
+            $(document).on("click", "td", function() {
+
+            });
             // add timer
             var intervalId = 0;
 
